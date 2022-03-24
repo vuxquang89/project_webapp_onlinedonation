@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Trang chủ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trao Yêu Thương">
+    <meta name="keywords" content="Trao Yêu Thương, Gửi Trọn Niềm Tin">
+    
+    <!-- Favicon icon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <!-- bootstrap -->
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--datepicker-->
+    <link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
+
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/icon/themify-icons/themify-icons.css}">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/icon/icofont/css/icofont.css}">
+
+    <!-- Core build with no theme, formatting, non-essential modules -->
+
+    <!-- Rich Text Editor css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}">
+    
+</head>
+<body>
+<div class="mcontainer navbar-wrapper bg-white">
+	<!-- include header -->
+    <th:block th:include="@{header-logo}"></th:block>
+    
+    <!-- main content -->
+    <main>
+    <th:block th:with="pathName=@{|${#httpServletRequest.requestURI}|}">
+		<th:block th:with="urls=${#strings.listSplit(pathName,'/')}">	
+	    
+    	<!-- banner image -->
+    	<div id="block-1">
+    		<div class="relative max-w-full">
+    			<div class="relative">
+    				<div class="md:flex justify-center relative w-full h-full aspect-w-16 aspect-h-9 aspect-96-37">
+    					<span class="border-box">
+    						<img class="img-banner" th:src="@{/assets/images/banner-trao-yeu-thuong-1440x777.png}">
+    					</span>
+    					
+    				</div>
+    			</div>
+    			<div></div>
+    		</div>
+    	</div>
+    	<!-- end banner image -->
+    	
+    	<!-- các chương trình quyên góp -->
+    	<div id="block-2">
+    		<section class="py-8 md:py-10 lg:py-14">
+    			<div class="max-w-6xl mx-auto w-full px-5 md:px-8 lg:px-8">
+    				<div class="mb-5 text-center md:mb-8">
+    					<h2 class="text-2xl lg:text-3xl font-bold text-pink">Các chương trình Quyên góp</h2>
+    				</div>
+    				<div class="grid-campaign grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    					<!-- donation item 1-->
+    					<div th:each="campaign : ${campaigns}" onclick="directUrl(event)" class="donation-item relative overflow-hidden flex flex-col flex-nowrap text-gray-700 hover:text-momo bg-white border border-gray-200 rounded-xl">
+    						<!-- <a th:href="@{'/view/' + ${campaign.campaignId}}"> -->
+	    						<div class="dn-img flex aspect-w-15 aspect-h-8">
+	    							<span class="border-box">
+	    								<img class="img-avatar-donation" th:alt="${campaign.name}" th:src="@{${campaign.urlAvatar}}">
+	    								<!-- set url -->
+	    								<!-- 
+	    								<th:block th:if="${#strings.indexOf(urls[0],urls[1]) >= 0}" th:with="path=${'/' + urls[0]}">	    
+										    <img class="img-avatar-donation" th:alt="${campaign.name}" th:src="${path + campaign.urlAvatar}">
+										</th:block>
+										<th:block th:unless="${#strings.indexOf(urls[0],urls[1]) >= 0}" th:with="path=${''}">	    
+										    <img class="img-avatar-donation" th:alt="${campaign.name}" th:src="${path + campaign.urlAvatar}">
+										</th:block>    
+										 -->
+	    								<!-- end set url -->
+	    							</span>
+	    						</div>
+	    						<div class="dn-body pt-4 pb-3 flex-1 min-h-1 px-4">
+	    							<h5 class="dn-title text-lg transition font-bold leading-snug" th:utext="${campaign.name}">..</h5>
+	    						</div>
+	    						<div class="dn-footer pt-0 mb-4 px-4">
+	    							<div class="flex flex-nowrap space-x-2 items-center mb-3">
+	    								<div class="shrink-0"></div>
+	    								<div></div>
+	    								<div class="shrink-0">
+	    									<span class="text-xs px-2 py-0.5 rounded-2xl lowercase badge-date-left" th:text="${'Còn ' + campaign.countDay + ' ngày'}">..</span>
+	    								</div>
+	    							</div>
+	    							<div class="dn-info flex justify-between items-center">
+	    								<div class="dn-money flex-1 flex items-end">
+		    								<strong class="flex item-end text-gray-700 leading-5" th:text="${#numbers.formatInteger(campaign.amount, 3,'POINT')}+'đ'">..</strong>
+		    								<span class="pl-2 text-sm text-gray-500" th:text="'/ ' + ${#numbers.formatInteger(campaign.goal, 3, 'POINT')}+'đ'">..</span>
+	    								</div>
+	    								
+	    							</div>
+	    							<div class="dn-progress flex overflow-hidden h-1.5 w-full bg-gray-200 rounded-lg my-1"> 
+	    								<div class="dn-progress-bar h-1.5 rounded-lg" th:classappend="${campaign.avg >= 100} ? bg-donation-completed : bg-donation" th:style="${'width:'+campaign.avg+'%'}"></div>
+	    							</div>
+	    							<div class="flex flex-nowrap justify-between space-x-2  md:space-x-3 items-center mt-3">
+	    								<div class="grow">
+	    									<div class="text-xs text-gray-500">Lượt quyên góp</div>
+	    									<div class="text-sm font-bold text-gray-600" th:text="${campaign.countDonation}">..</div>
+	    								</div>
+	    								<div class="grow">
+	    									<div class="text-xs text-gray-500">Đạt được</div>
+	    									<!-- <div class="text-sm font-bold text-gray-600" th:text="${#numbers.formatDecimal(campaign.avg,3,1,'COMMA') + '%'}">..%</div> -->
+	    									<div class="text-sm font-bold text-gray-600" th:text="${#numbers.formatDecimal(campaign.avg,1,1,'COMMA') + '%'}">..%</div>
+	    								</div>
+	    								<div class="grow flex items-center justify-end" th:switch="${campaign.status}">
+	    									<th:block th:if="${#strings.indexOf(urls[0],urls[1]) >= 0}" th:with="path=${'/' + urls[0]}">
+	    										<input type="hidden" th:value="${path + '/Donation/view/' + {campaign.campaignId}}">												
+											</th:block>
+											<th:block th:unless="${#strings.indexOf(urls[0],urls[1]) >= 0}" th:with="path=${''}">	    
+											    <input type="hidden" th:value="${path + '/Donation/view/' + {campaign.campaignId}}">
+											</th:block>
+	    									
+	    									<span th:case="3" class="text-xs text-gray-400 border border-gray-400 rounded-md flex items-center justify-center font-bold h-7 px-3 md:group-hover:bg-gray-50">Đạt mục tiêu</span>
+	    									<a th:case="*" class="text-xs text-pink border-pink-600 rounded flex items-center justify-center font-semibold h-7 px-2" th:href="@{'/Donation/view/' + ${campaign.campaignId}}">Quyên góp</a>
+	    									
+	    								</div>
+	    							</div>
+	    						</div>
+    						<!-- </a> -->
+    					</div>    					
+    					<!--end donation item 1-->
+    				</div>
+    				<!-- button view more -->
+    				<div class="box-btn-more-active pt-6 text-center" th:if="${showMoreActive}">    					
+    					<a class="viewmore" href="javascript:loadMoreActive()">Xem thêm</a>
+    				</div>
+    			</div>
+    		</section>
+    	</div>
+    	<!-- end các chuong trình quyên góp -->
+    	
+    	<!-- tin tức mới nhất -->
+    	<div id="block-3">
+    		<section class="py-8 md:py-10 lg:py-14 bg-pink-50">
+    			<div class="max-w-6xl mx-auto w-full px-5 md:px-8 lg:px-8 ">
+    				<div class="mb-5 text-center md:mb-8">
+    					<h2 class="text-2xl lg:text-3xl font-bold text-pink">Tin tức</h2>
+    				</div>
+    				<div class="grid-campaign-news grid grid-cols-1 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    					
+    					<!-- donation news item 1 -->    					
+    					<div th:each="newsCampaign : ${newsCampaigns}" class="box-dn-news-item h-full group transition-shadow cursor-pointer md:overflow-hidden md:bg-white md:rounded-lg md:shadow-md md:hover:shadow-lg">
+    						<div>
+    						
+    							<div class="viewNews flex flex-wrap pbb-3 border-b border-gray-200 sm:border-none sm:pb-0 " th:data-id="${newsCampaign.campaignId}">
+	    							<!-- <a class="viewNews" href="javascript:viewNews(this)" th:data-id="${newsCampaign.campaignId}"> -->
+	    								<div class="order-2 ptt-3 sm:flex-auto sm:w-full w-28 sm:order-1 sm:pt-0">
+	    									<div class="overflow-hidden bg-gray-100 rounded flex md:rounded-none relative">
+	    										<span class="border-box-news">
+	    											<!-- set url -->
+	    											<!-- 
+	    											<th:block th:if="${#strings.indexOf(urls[0],urls[1]) >= 0}" th:with="path=${'/' + urls[0]}">
+													    <img class="img-avatar-news" th:alt="${newsCampaign.name}" th:src="${path + newsCampaign.urlAvatar}">
+													</th:block>
+													<th:block th:unless="${#strings.indexOf(urls[0],urls[1]) >= 0}" th:with="path=${''}">	    
+													    <img class="img-avatar-news" th:alt="${newsCampaign.name}" th:src="${path + newsCampaign.urlAvatar}">
+													</th:block>
+				    								 -->
+				    								<!-- end set url -->
+	    											<img class="img-avatar-news" th:alt="${newsCampaign.name}" th:src="@{${newsCampaign.urlAvatar}}">
+	    										</span>
+	    									</div>
+	    								</div>
+	    								
+	    								<div class="flex-1 order-1 pr-6 sm:pr-0 sm:flex-auto sm:w-full sm:order-2 md:pb-2 md:px-4">
+	    									<div class="text-news-title ptt-3 pb-2 font-semibold leading-snug text-md" th:text="${newsCampaign.name}">..</div>
+	    									<div class="text-xs text-gray-500" th:text="${newsCampaign.dateEnd}">..</div>
+	    								</div>
+    								
+    							</div>
+    							
+    						</div>
+    					</div>
+    					<!--end donation news item 1 -->
+    					
+    				</div>
+    				<div class="box-btn-more-news pt-6 text-center" th:if="${showMoreNews}">
+    					<a href="javascript:loadMoreNews()" class="viewmore">Xem thêm</a>
+    				</div>
+    			</div>
+    		</section>
+    	</div>
+    	<!-- end tin tức mới nhất -->
+    	
+    	<!-- hướng dẫn quyên góp -->
+    	<div id="block-4">
+    		<section class="py-8 md:py-10 lg:py-14 bg-gray-50">
+    			<div class="max-w-6xl text-center mx-auto w-full px-5 md:px-8 lg:px-8 ">
+    				<h2 class="text-2xl lg:text-3xl font-bold text-pink">Hướng dẫn quyên góp</h2>
+    			</div>
+    			<div>
+    				<div>
+    					<div class="max-w-3xl mx-auto ">
+    						<div class="flex justify-center flex-nowrap">
+    							<div class="pt-4 pl-10">
+    								<div class="htu-list">
+    									<div class="relative pl-12 cursor-pointer htu-list-item">
+    										<div class="">>></div>
+    										<div class="pt-1 transition-colors text-md text-gray-700 font-medium">Với mỗi chương trình quyên góp, các Nhà Hảo Tâm sẽ chuyển khoản về:</div>
+    									</div>
+    									<div class="relative pl-12 cursor-pointer htu-list-item">
+    										<div class="absolute top-0 left-0 w-8 h-8  transition-colors text-md font-semibold rounded-full  flex items-center justify-center bg-gray-200 text-gray-700">1</div>
+    										<div class="pt-1 transition-colors text-md text-gray-700 font-medium">Số TK : STK cá nhân đại diện cho mỗi chương trình quyên góp</div>
+    									</div>
+    									<div class="relative pl-12 cursor-pointer htu-list-item">
+    										<div class="absolute top-0 left-0 w-8 h-8  transition-colors text-md font-semibold rounded-full  flex items-center justify-center bg-gray-200 text-gray-700">2</div>
+    										<div class="pt-1 transition-colors text-md text-gray-700 font-medium">Tên TK: tên TK cá nhân đại diện cho mỗi chương trình quyên góp</div>
+    									</div>
+    									<div class="relative pl-12 cursor-pointer htu-list-item">
+    										<div class="absolute top-0 left-0 w-8 h-8  transition-colors text-md font-semibold rounded-full  flex items-center justify-center bg-gray-200 text-gray-700">3</div>
+    										<div class="pt-1 transition-colors text-md text-gray-700 font-medium">Nội dung chuyển khoản, các Nhà Hảo Tâm cần ghi rõ: Nhà Hảo Tâm(tên đăng nhập)_TYT_Mã chương trình quyên góp</div>
+    									</div>
+    									<div class="relative pl-12 cursor-pointer htu-list-item">
+    										<div class="absolute top-0 left-0 w-8 h-8  transition-colors text-md font-semibold rounded-full  flex items-center justify-center bg-gray-200 text-gray-700">4</div>
+    										<div class="pt-1 transition-colors text-md text-gray-700 font-medium">Mọi sự đóng góp của Nhà Hảo Tâm, sẽ được chúng tôi cập nhật lên website của chương trình được quyên góp.</div>
+    									</div>
+    								</div>
+    							</div>
+    						</div>
+    					</div>
+    					
+    				</div>
+    			</div>
+    			
+    		</section>
+    	</div>
+    	<!-- end hướng dẫn quyên góp -->
+    	
+    	<!-- box dialog donation news -->
+    	<div class="dialog-news"> 
+    	
+    	</div> 
+    	<!-- end box dialog donation news -->
+    	
+    	<!-- button go to top page -->
+    	<div class="fixed z-30  right-3 bottom-16 sm:bottom-10 totop-btn sm:right-8">
+    		<button id="scrollToTop" class="flex items-center justify-center text-gray-500 transition bg-white border rounded-full shadow-sm cursor-pointer w-11 h-11"><i class="ti-arrow-up"></i></button>
+    		
+    		<script>
+    		
+		        //Khi người dùng cuộn chuột thì gọi hàm scrollFunction
+		        window.onscroll = function() {scrollFunction()};
+		        // khai báo hàm scrollFunction
+		        function scrollFunction() {
+		            // Kiểm tra vị trí hiện tại của con trỏ so với nội dung trang
+		            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+		                //nếu lớn hơn 20px thì hiện button
+		                document.getElementById("scrollToTop").style.display = "block";
+		            } else {
+		                 //nếu nhỏ hơn 20px thì ẩn button
+		                document.getElementById("scrollToTop").style.display = "none";
+		            }
+		        }
+		        //gán sự kiện click cho button
+		        document.getElementById('scrollToTop').addEventListener("click", function(){
+		            //Nếu button được click thì nhảy về đầu trang
+		            document.body.scrollTop = 0;
+		            document.documentElement.scrollTop = 0;
+		        });
+		        
+		    </script>
+    	</div>
+    	<!-- end button -->
+    	
+    	</th:block>
+	    	
+	</th:block>	
+    </main>
+	<!-- include footer -->
+    <th:block th:include="@{footer}"></th:block>
+</div>  
+   
+   
+    
+<!-- Required Jquery -->
+<script type="text/javascript" th:src="@{/assets/js/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/jquery-ui/jquery-ui.min.js}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" th:src="@{/assets/js/script.js}"></script>    
+<script type="text/javascript" th:src="@{/assets/js/action.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/script-index.js}"></script>
+
+</body>
+</html>

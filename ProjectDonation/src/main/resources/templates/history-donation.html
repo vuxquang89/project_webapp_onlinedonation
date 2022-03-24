@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lịch sử quyên góp</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CodedThemes">
+    <meta name="keywords" content=" Trao Yêu Thương, Gửi Trọn Niềm Tin">
+    <meta name="author" content="CodedThemes">
+
+    <!-- Favicon icon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <!-- bootstrap -->
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!--datepicker-->
+    <link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
+
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/icon/themify-icons/themify-icons.css}">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/icon/icofont/css/icofont.css}">
+
+    <!-- Core build with no theme, formatting, non-essential modules -->
+
+    <!-- Rich Text Editor css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}"/>
+
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}">
+
+</head>
+<body>
+	<div class="mcontainer navbar-wrapper" vertical-effect="pink" vertical-nav-type="expanded">
+        <div class="overlay-box"></div>
+        <!-- include header -->
+        <th:block th:include="@{header-logo}"></th:block>
+        
+        <div class="div-main-container">
+            <div class="div-wrapper">
+                <!-- include navbar -->
+                <th:block th:include="@{navbar}"></th:block>
+                
+                <!-- content -->
+                <div class="div-content">
+                    <div class="div-inner-content">
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <div class="page-body">
+                                	<div class="row">
+                                        
+                                        <div class="col-md-12 col-xl-12">
+                                            <div class="table-wrapper">
+                                                <div class="table-title">
+                                                    <div class="row">
+                                                        <div class="col-sm-8 title"><h2>Lịch sử quyên góp</h2></div>
+                                                        
+                                                        <div class="col-sm-12">
+                                                        	<p th:utext="'- Tổng số lượt quyên góp : ' + ${generalDonation.countDonation} + ' lượt'">-</p>
+                                                        	<p th:utext="'- Tổng số số tiền đã quyên góp : ' + ${#numbers.formatInteger(generalDonation.totalAmount, 3, 'POINT')} + ' vnđ'">-</p>                                                        	
+                                                        </div>
+                                                        <div class="col-sm-12"><hr></div>
+                                                        <div class="col-sm-12 bg_history">
+                                                        	<p>Chi tiết lịch sử các đợt quyên góp</p>
+                                                        </div>
+                                                        
+                                                        <div class="col-sm-12">
+                                                            <form class="form-select-item">
+                                                                <div class="row form-group">
+                                                                    <div class="col-sm-2">
+                                                                		<label class="label-input" for="saction">Hiển thị: </label>
+                                                                	</div>
+                                                                	<div class="col-sm-6">
+	                                                                    <div class="col-sm-3 select-item">
+	                                                                        <select class="form-control" id="limitShowItemHisDonation">
+	                                                                        	<option value="5">5</option>
+	                                                                            <option value="10">10</option>
+	                                                                            <option value="20">20</option>
+	                                                                            <option value="30">30</option>
+	                                                                            <option value="40">40</option>
+	                                                                        </select>
+	                                                                    </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-sm-4">
+			                                                            <div class="form-group has-feedback has-search">
+			                                                                <span class="ti-search form-control-feedback"></span>
+			                                                                <input id="iSearchHisDonation" type="text" class="form-control" placeholder="Tìm kiếm" onkeyup="searchHistoryDonation();">
+			                                                            </div>
+                                                        			</div>
+                                                                </div>
+                                                            </form>
+                                                        </div>   
+                                                        
+                                                        <div class="col-sm-6">
+                                                        	<div class="row">
+	                                                        	<div class="col-sm-3 col">
+						                                        	<label for="aDonation_date" class="lable-input">Từ ngày </label>
+						                                        </div>                                            
+						                                        <div class="col-sm-4 col input-group date" id="his-from-datepicker" data-date-format="dd-mm-yyyy">
+						                                        	<input id="aDonation_date" type="text" th:value="${hisDate}" class="form-control" placeholder="dd-mm-yyyy" readonly>
+						                                           	<span class="input-group-addon">
+						                                            	<span class="glyphicon glyphicon-calendar"></span>
+						                                            </span>
+						                                        </div>
+						                                        
+					                                        </div>
+					                                     </div>
+					                                     <div class="col-sm-6">
+					                                     	<a class="btn btn-success" th:href="@{/Donation/user/exportExcel}"><ti class="ti-download"></ti>Xuất file Excel</a>
+					                                     </div>
+					                                     <!-- 
+					                                     <div class="col-sm-6">
+					                                        <div class="row">
+						                                        <div class="col-sm-3 col">
+						                                        	<label for="d_date" class="lable-input">Đến ngày </label>
+						                                        </div>                                            
+						                                        <div class="col-sm-4 col input-group date" id="from-datepicker" data-date-format="dd-mm-yyyy">
+						                                        	<input id="d_date" type="text" class="form-control" placeholder="dd-mm-yyyy" readonly>
+						                                            <span class="input-group-addon">
+						                                            	<span class="glyphicon glyphicon-calendar"></span>
+						                                            </span>
+						                                        </div>
+                                                        	</div>         
+                                                        </div>
+                                                         -->
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <table id="mTableHisDonation" class="table table-based table-hover table-style">
+                                                    <thead>
+                                                        <tr> 
+                                                        	<th>
+                                                                <div class="checkbox-del">
+                                                                    <input id="checkDelGroup_Donation" class="checkbox-del-group" type="checkbox">
+                                                                    <button id="btnDelGroup_Donation" disabled="disabled" class="btn btn-danger btn-del" type="button"><i class="ti-trash"></i></button>
+                                                                </div>
+                                                            </th>
+                                                            <th style="display:none;">id</th>
+                                                            <th>Tên chiến dịch</th>
+                                                            <th>Ngày quyên góp</th>                                                            
+                                                            <th>Số tiền quyên góp(vnđ)</th>   
+                                                            <th></th>                                                         
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>                                                    
+                                                        <tr th:each="hisDonation : ${hisDonations}"> 
+                                                        	<td>
+                                                                <div class="checkbox-del">
+                                                                    <input class="checkbox-del-group check-del" type="checkbox"> 
+                                                                    <!-- <input type="hidden" th:feild="${hisDonation.donationId}"> -->                                                   
+                                                                </div>
+                                                            </td>
+                                                            <td style="display:none;" th:text="${hisDonation.donationId}">id</td>
+                                                            <td style="width:700px" th:utext="${hisDonation.campaignName}">..</td>
+                                                            <td th:text="${hisDonation.dateTime}">..</td>
+                                                            <td th:text="${#numbers.formatInteger(hisDonation.amount, 3, 'POINT')}">..</td>
+                                                            <td class="td-action">
+                                                            	<a href='#' class='delete' title='Xóa' th:data='${hisDonation.donationId}' onclick='aDelGeneralDonation(this);return false;'><i class="ti-trash"></i></a>
+                                                            </td>                                                            
+                                                        </tr>
+                                                            
+                                                    </tbody>
+                                                </table>
+                                                 
+                                                <div class="clearfix">
+                                                	<div>
+                                                    	<div class="hint-text">Hiển thị <b th:text="${limit > totalRecords ? totalRecords : limit}">..</b> trong số <b th:text="${totalRecords}">..</b> mục</div>
+                                                    </div>
+                                                    <div class="box-pagination">
+                                                        <div class="pagination">
+                                                            <ul class="pagination-body" ul-click="hdonation">
+                                                                <li><a href="#" onclick='return false' class="prev"><<</a></li>
+                                                                <th:block th:if="${totalPage > 0}">
+                                                                <th:block th:each="i: ${#numbers.sequence(1, totalPage)}">
+                                                                <li th:classappend="${i == 1} ? 'pageNumber pactive' : 'pageNumber'"><a href="#" onclick='return false' th:utext="${i}"></a></li>
+                                                                </th:block>
+                                                                </th:block>
+                                                                <li><a href="#" onclick='return false' class="next">>></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>  
+   
+    	
+	<!-- alert box modal message-->
+	<div id="modalMsg" class="modal-msg">
+
+   		<!-- Modal msg content -->
+		<div class="modal-msg-content">
+  			<div class="modal-msg-header">    			
+    			<i class="fa fa-check fa-color-green"></i><h5 class="msg-content"></h5>
+    			<!-- <i class="far fa-times"></i> -->
+  			</div>
+	  		
+		</div>
+
+	</div>
+	
+    
+<!-- Required Jquery -->
+<script type="text/javascript" th:src="@{/assets/js/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/jquery-ui/jquery-ui.min.js}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>    
+
+<script type="text/javascript" th:src="@{/richtext/jquery.richtext.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/script.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/action.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/script-account.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/action_account.js}"></script>
+
+</body>
+</html>

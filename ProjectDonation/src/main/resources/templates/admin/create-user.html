@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage User</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CodedThemes">    
+    <meta name="author" content="CodedThemes">
+
+    <!-- Favicon icon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <!-- bootstrap -->
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!--datepicker-->
+    <link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
+
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/icon/themify-icons/themify-icons.css}">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/icon/icofont/css/icofont.css}">
+
+    <!-- Core build with no theme, formatting, non-essential modules -->
+
+    <!-- Rich Text Editor css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}"/>
+
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}">
+
+</head>
+<body>
+	<div class="mcontainer navbar-wrapper" vertical-effect="pink" vertical-nav-type="expanded">
+        <div class="overlay-box"></div>
+        <!-- include header -->
+        <th:block th:include="@{admin/header}"></th:block>
+        
+        <div class="div-main-container">
+            <div class="div-wrapper">
+                <!-- include navbar -->
+                <th:block th:include="@{admin/navbar}"></th:block>
+                
+                <!-- content -->
+                <div class="div-content">
+                    <div class="div-inner-content">
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <div class="page-body">
+                                
+                                	<form id="f-user-create" th:action="@{/Donation/admin/createUser}" th:object="${userForm}" method="post">
+                                        <h3 class="title">Thêm người dùng mới</h3>
+                                        <div id="msg" class="msg" th:utext="${msg}"></div>
+                                        <div>
+                                            <div class="row form-group">
+                                                <div class="col-sm-3 col">
+                                                    <label for="username" class="lable-input">Tên đăng nhập <span class="stick">*</span></label>
+                                                </div>                                            
+                                                <div class="col-sm-3 col">
+                                                    <input id="username" type="text" th:field="*{username}" placeholder="Nhập tên đăng nhập" class="form-control" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-sm-3 col">
+                                                    <label for="password" class="lable-input">Mật khẩu <span class="stick"></span></label>
+                                                </div>
+                                                <div class="col-sm-3 col">
+                                                    <input type="password" id="password" th:value="*{pass}" class="form-control" readonly placeholder="Nhập mật khẩu">
+                                                    <input type="hidden" th:field="*{pass}">
+                                                </div>
+                                            </div>
+                                            <!-- 
+                                            <div class="row form-group">
+                                                <div class="col-sm-3 col">
+                                                    <label for="repassword" class="lable-input">Nhập lại mật khẩu <span class="stick">*</span></label>
+                                                </div>
+                                                <div class="col-sm-3 col">
+                                                    <input type="password" id="repassword" class="form-control" placeholder="Nhập lại mật khẩu">
+                                                </div>
+                                            </div>
+                                             -->
+                                            <div class="row form-group">
+                                                <div class="col-sm-3 col">
+                                                    <label for="fullname" class="lable-input">Họ tên <span class="stick"></span></label>
+                                                </div>                                            
+                                                <div class="col-sm-3 col">
+                                                    <input id="fullname" type="text" th:field="*{fullName}" placeholder="Nhập họ tên" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-sm-3 col">
+                                                    <label for="email" class="lable-input">Email <span class="stick">*</span></label>
+                                                </div>                                            
+                                                <div class="col-sm-3 col">
+                                                    <input id="email" type="text" th:field="*{email}" placeholder="Nhập địa chỉ email" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-sm-3 col">
+                                                    <label for="phone" class="lable-input">Số điện thoại <span class="stick">*</span></label>
+                                                </div>                                            
+                                                <div class="col-sm-3 col">
+                                                    <input id="phone" type="text" th:field="*{phone}" placeholder="Nhập số điện thoại" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-9 col-sm-offset-3 btn-action-group">
+                                                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                                    <a th:href="@{/Donation/admin/manageUser}" class="btn btn-default">Hủy</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- include footer -->
+    <th:block th:include="@{admin/footer}"></th:block>    
+    </div>  
+   
+    <!-- The Modal -->
+	<div id="myModal" class="myModal">
+
+   		<!-- Modal content -->
+		<div class="modal-content">
+  			<div class="modal-header">
+    			<span class="close">&times;</span>
+    			<h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i>Active</h4>
+  			</div>
+	  		<div class="m-content modal-body">	    		
+	  		</div>
+	  		<input id="mdata" type="hidden">
+	  		<input id="mstatus" type="hidden">
+	  		<div class="modal-footer">
+	    		<button type="button" class="btn btn-default" id="modal-cancel-btn">Cancel</button>
+				<button type="button" class="btn btn-danger" onclick="btnActiveUser();" id="modal-delete-btn">OK</button>
+	  		</div>
+		</div>
+
+	</div>
+	
+	<!-- alert box modal message-->
+	<div id="modalMsg" class="modal-msg">
+
+   		<!-- Modal msg content -->
+		<div class="modal-msg-content">
+  			<div class="modal-msg-header">    			
+    			<i class="fa fa-check fa-color-green"></i><h5 class="msg-content"></h5>
+    			<!-- <i class="far fa-times"></i> -->
+  			</div>
+	  		
+		</div>
+
+	</div>
+	
+    
+<!-- Required Jquery -->
+<script type="text/javascript" th:src="@{/assets/js/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/jquery-ui/jquery-ui.min.js}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    
+<script type="text/javascript" th:src="@{/richtext/jquery.richtext.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/script.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/action.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/action_user.js}"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!-- 
+<div class="header">
+	<div class="logo">
+		<a href="" title="Trao yêu thương">
+        	<img class="i-logo" src="media/images/i-logo.png">
+        </a>
+    </div>
+    <div class="header-right">
+        
+        <div class="header-title">
+            <h3></h3>
+        </div>
+    </div>
+</div>
+ -->
+
+<nav class="navbar header-navbar mheader">
+	<div class="navbar-wrapper">
+    	<div class="navbar-logo" logo-theme="logo-theme-1">
+        	<a class="mobile-menu" id="mobile-collapse" href="#">
+            	<span class="menu-icon"></span>
+                <i class="ti-menu"></i>
+            </a>
+           	<a th:href="@{/Donation/index}">
+            	<img class="img-logo img:mll" th:src="@{/assets/images/logo.png}" alt="logo">
+            </a>
+            <a class="mobile-options">
+            	<i class="ti-more"></i>
+            </a>
+        </div>
+        <div class="navbar-container container-fluid">
+        	<ul class="nav-right">
+            	<li class="user-profile header-notification complete" th:if="${#request.userPrincipal != null}">
+                	<a th:href="@{/Donation/user/accountInfo}">
+                    	<!--  <img th:src="@{/assets/images/avatar.png}" class="img-radius" alt="User-Profile-Image">-->
+                    	<img th:src="@{/assets/images/avatar.png}" class="img-radius" alt="User-Profile-Image">
+                        <span id="d_username" th:utext="${#request.userPrincipal.name}"></span>
+                        <i class="ti-angle-down"></i>
+                   	</a>
+		            <ul class="show-notification profile-notification">
+		            	<li class="complete">
+		                	<a th:href="@{/Donation/user/accountInfo}">
+		                    	<i class="ti-user"></i>Thông tin tài khoản                                        
+		                    </a>
+		               	</li>
+		                <li>
+		                	
+		                	<a th:href="@{/Donation/logout}">
+		                    	<i class="ti-layout-sidebar-left"></i>Đăng xuất
+		                    </a>
+		                </li>
+		           	</ul>
+              	</li>
+              	
+              	<li th:unless="${#request.userPrincipal != null}">
+              		<a th:href="@{/Donation/login}">Đăng nhập</a>
+              	</li>
+     		</ul>
+   		</div>
+	</div>
+</nav>

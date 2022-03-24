@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+ 
+<p style="font-weight: bold" th:text="'Chào ' + ${name} + ','"></p>
+<p th:text="'Đây là tài khoản đăng nhập của bạn: '"></p>
+<p th:text="'- Tên đăng nhập : ' + ${username}"></p>
+<p th:text="'- Mật khẩu : ' +${password}"></p>
+<p>Hãy <a href="http://localhost:8080/Donation/login">đăng nhâp</a> để tham gia cùng chúng tôi.</p>
+<p>Xin cám ơn!</p>
+</body>
+</html>
